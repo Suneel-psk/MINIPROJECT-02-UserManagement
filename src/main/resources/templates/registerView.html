@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>RegisterForm</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<h2>Reset Password Here</h2>
+		<font color="green">
+			<h3 th:text="${msg}"></h3>
+		</font>
+		<font color="red">
+			<h3 th:text="${emsg}"></h3>
+		</font>
+		<form th:object="${registerDto}" th:action="@{/register}" method="post">
+			<table>
+				<tr>
+					<td>Enter Name</td>
+					<td><input type="text" th:field="*{name}" required></td>
+				</tr>
+				<tr>
+					<td>Enter Username</td>
+					<td><input type="text" th:field="*{email}" required /></td>
+				</tr>
+				<tr>
+					<td>Enter Phno</td>
+					<td><input type="number" th:field="*{phno}" required /></td>
+				</tr>
+				<tr>
+					<td>Enter Country</td>
+					<td><select th:field="*{countryId}" id="countryId" class="form-select" required>
+							<option value="">-Select-</option>
+							<option th:each="entry : ${countries.entrySet()}" th:value="${entry.key}"
+								th:text="${entry.value}" />
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>Enter State</td>
+					<td><select th:field="*{stateId}" id="stateId" class="form-select" required>
+							<option value="">-Select-</option>
+						</select></td>
+				</tr>
+				<tr>
+					<td>Enter City</td>
+					<td><select th:field="*{cityId}" id="cityId" class="form-select" required>
+							<option value="">-Select-</option>
+						</select></td>
+				</tr>
+				<tr>
+					<td>
+					</td>
+					<td><input type="submit" value="Save" class="btn btn-primary" /></td>
+				</tr>
+			</table>
+		</form>
+		Already have an account login here <a href="/login">Login</a>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+
+			$("#countryId").on("change", function () {
+
+				$('#stateId').find('option').remove();
+				$('#cityId').find('option').remove();
+
+				$('<option>').val('').text('-Select-').appendTo("#stateId");
+				$('<option>').val('').text('-Select-').appendTo("#cityId");
+
+				var cid = $('#countryId').val();
+				$.ajax({
+					type: 'GET',
+					url: '/states/' + cid,
+					success: function (response) {
+						console.log(response);
+						$.each(response, function (key, value) {
+							$('<option>').val(key).text(value).appendTo("#stateId");
+						});
+					}
+				});
+			});
+
+			$("#stateId").on("change", function () {
+
+				$('#cityId').find('option').remove();
+				$('<option>').val('').text('-Select-').appendTo("#cityId");
+
+
+				var sid = $('#stateId').val();
+				$.ajax({
+					type: 'GET',
+					url: '/cities/' + sid,
+					success: function (response) {
+						console.log(response);
+						$.each(response, function (key, value) {
+							$('<option>').val(key).text(value).appendTo("#cityId");
+						});
+					}
+				});
+			});
+		});
+
+	</script>
+
+</body>
+
+</html>
