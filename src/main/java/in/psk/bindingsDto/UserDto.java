@@ -79,6 +79,13 @@ public class UserDto {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
+	@Override
+	public String toString() {
+		return "UserDto [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", phno=" + phno + ", updatePwd=" + updatePwd + ", newPwd=" + newPwd + ", confirmPwd=" + confirmPwd
+				+ ", countryId=" + countryId + ", stateId=" + stateId + ", cityId=" + cityId + "]";
+	}
+	
 	
 	
 

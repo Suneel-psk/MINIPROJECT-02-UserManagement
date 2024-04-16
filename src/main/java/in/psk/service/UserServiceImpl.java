@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDto getUser(LoginDto loginDto) {
+	public UserDto getUserByCredintials(LoginDto loginDto) {
 
 		UserEntity user = userRepo.findByEmailAndPassword(loginDto.getEmail(), loginDto.getPassword());
 		if (user == null) {
@@ -158,6 +158,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getQoutes() {
 		if(quotations==null) {
+			//why i write this if statement means to reduce web service calls
 		String url = "https://type.fit/api/quotes";
 		RestTemplate rt = new RestTemplate();
 		ResponseEntity<String> forEntity = rt.getForEntity(url, String.class);

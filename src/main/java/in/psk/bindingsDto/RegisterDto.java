@@ -44,5 +44,10 @@ public class RegisterDto {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
+	@Override
+	public String toString() {
+		return "RegisterDto [name=" + name + ", email=" + email + ", phno=" + phno + ", countryId=" + countryId
+				+ ", stateId=" + stateId + ", cityId=" + cityId + "]";
+	}
 	
 }

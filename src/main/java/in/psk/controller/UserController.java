@@ -75,24 +75,25 @@ public class UserController {
 
 	@PostMapping("/login")
 	public String login(LoginDto loginDto, Model model) {
-		UserDto user = userServ.getUser(loginDto);
-		if (user == null) {
-			model.addAttribute("emsg", "InvalidCredintials");
-			return "index";
-		}
+	    UserDto user = userServ.getUserByCredintials(loginDto);
+	    if (user == null) {
+	        model.addAttribute("emsg", "Invalid Credentials");
+	        return "index";
+	    }
 
-		if ("YES".equals(user.getUpdatePwd())) {
-			// pwd is updated go to dashboard
-			return "redirect:dashboard";
-		} else {
-			// why i am setting email below means to display email in ui page
-			ResetPwdDto resetPwd = new ResetPwdDto();
-			resetPwd.setEmail(user.getEmail());
-			model.addAttribute("resetDto", new ResetPwdDto());
-			return "resetPwdView";
-		}
-
+	    if ("YES".equals(user.getUpdatePwd())) {
+	        // Password is updated, go to dashboard
+	        return "redirect:/dashboard";
+	    } else {
+	        // Setting email below to display email in UI page
+	        ResetPwdDto resetPwdDto = new ResetPwdDto();
+	        resetPwdDto.setEmail(user.getEmail());
+	        
+	        model.addAttribute("resetPwdDto", resetPwdDto); // Corrected attribute name
+	        return "resetPwdView";
+	    }
 	}
+
 
 	// to get resetPage
 	@PostMapping("/resetPwd")
@@ -118,7 +119,7 @@ public class UserController {
 			return "resetPwdView";
 			}	
 		}else{
-			model.addAttribute("emsg", "Given Old Pwd is wrong");
+			model.addAttribute("smsg", "Given Old Pwd is wrong");
 			return "resetPwdView";
 		}
 	}

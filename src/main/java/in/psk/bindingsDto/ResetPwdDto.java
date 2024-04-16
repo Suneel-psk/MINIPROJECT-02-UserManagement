@@ -36,6 +36,11 @@ public class ResetPwdDto {
 	public void setConfirmPwd(String confirmPwd) {
 		this.confirmPwd = confirmPwd;
 	}
+	@Override
+	public String toString() {
+		return "ResetPwdDto [userId=" + userId + ", email=" + email + ", oldPwd=" + oldPwd + ", newPwd=" + newPwd
+				+ ", confirmPwd=" + confirmPwd + "]";
+	}
 	
 
 }

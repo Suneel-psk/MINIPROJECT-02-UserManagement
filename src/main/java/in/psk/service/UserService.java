@@ -19,7 +19,7 @@ public interface UserService {
     //saveUserInfo
 	public boolean registerUser(RegisterDto regDto);
 	//CheckLoginCredintials
-	public UserDto getUser(LoginDto loginDto);
+	public UserDto getUserByCredintials(LoginDto loginDto);
 	//reset password
 	public boolean resetPassword(ResetPwdDto resetDto);
 	//To get Qoutes here we are going to do api call one application communicate with the another application
